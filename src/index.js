@@ -21,7 +21,13 @@ ctx.lineJoin = 'round';
 ctx.lineWidth = range.min;
 
 function draw(e) {
-    if(!drawing) return;
+    if(!drawing) {
+        if(e.which == 1)
+        {
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+            drawing = true;
+        } else return;
+    }
 
     ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`
     ctx.lineWidth+= dir;
