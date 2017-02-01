@@ -9,14 +9,22 @@ let drawing = false;
 let lastX = 0;
 let lastY = 0;
 
+let hue = 0;
+
+const range = {min: 10, max: 90};
+let strokeSize = range.min;
+let dir = 1;
+
 let ctx = canvas.getContext('2d');
 ctx.lineCap = 'round';
 ctx.lineJoin = 'round';
-ctx.lineWidth = 10;
-ctx.strokeStyle = '#BADA55';
+ctx.lineWidth = range.min;
 
 function draw(e) {
     if(!drawing) return;
+
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`
+    ctx.lineWidth+= dir;
 
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
@@ -24,6 +32,8 @@ function draw(e) {
     ctx.stroke();
 
     [lastX, lastY] = [e.offsetX, e.offsetY];
+    hue++;
+    if(ctx.lineWidth < range.min || ctx.lineWidth > range.max) dir = -dir;
 }
 
 canvas.addEventListener('mousemove', draw);
